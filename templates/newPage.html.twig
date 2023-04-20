@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>{{ newPage }}</h1>
+
+<div>
+    let see the new page here
+</div>
+
+<h2>Answers</h2>
+<ul>
+    {% for answer in answers %}
+        <li>{{ answer }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
