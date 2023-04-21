@@ -5,45 +5,39 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Twig\Environment;
 
 class QuestionController extends AbstractController
 {
     /**
-     * @Route ("/")
+     * @Route("/", name="app_homepage")
      */
-    public function homepage() {
-        return new Response('Camelia is my favorite friend!');
+    public function homepage(Environment $twigEnvironment)
+    {
+        /*
+        // fun example of using the Twig service directly!
+        $html = $twigEnvironment->render('question/homepage.html.twig');
+
+        return new Response($html);
+        */
+
+        return $this->render('question/homepage.html.twig');
     }
 
     /**
-     * @Route("/blog/new-page")
+     * @Route("/questions/{slug}", name="app_question_show")
      */
-
-    public function blog() {
-        return new Response('New page for my blog');
-    }
-
-    /**
-     * @Route("/blog/new-page/{slug}")
-     */
-
-//    public function newPage($slug) {
-//        return new Response(sprintf('New page for my blog "%s"!',
-//            ucwords(str_replace('-',' ', $slug))
-//        ));
-//    }
-
-    public function newPage ($slug)
+    public function show($slug)
     {
         $answers = [
-            'Make sure your cat is sitting purrrfectly still ?',
+            'Make sure your cat is sitting purrrfectly still 🤣',
             'Honestly, I like furry shoes better than MY cat',
             'Maybe... try saying the spell backwards?',
-            ];
-    return $this->render('newPage.html.twig', [
-        'newPage' => ucwords(str_replace('-', ' ', $slug)),
-        'answers' => $answers,
-    ]);
+        ];
+
+        return $this->render('question/show.html.twig', [
+            'question' => ucwords(str_replace('-', ' ', $slug)),
+            'answers' => $answers,
+        ]);
     }
 }
